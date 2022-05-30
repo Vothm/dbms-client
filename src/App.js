@@ -13,7 +13,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/classes" element={<Classes />} />
-        <Route path="/manager" element={<Manager />} />
+        <Route exact path="/manager" element={<Manager />} />
         <Route path="*" element={<div>Not Found</div>} />
       </Routes>
     </Fragment>
