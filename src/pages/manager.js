@@ -1,14 +1,19 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+const env = require("dotenv").config({ path: "../" });
 
 const Manager = () => {
+  let port = 5000;
+
+  console.log(process.env);
+  console.log(port);
   const [allLeads, setAllLeads] = useState([]);
 
   // Delete row
   const handleDelete = async (id) => {
     try {
       const deleteRow = await fetch(
-        `http://localhost:5000/api/deleteLead/${id}`,
+        `http://localhost:${port}/api/deleteLead/${id}`,
         {
           method: "DELETE",
         }
@@ -22,8 +27,10 @@ const Manager = () => {
 
   const getAllLeads = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/getAllLeads");
+      const response = await fetch(`http://localhost:${port}/api/getAllLeads`);
+      console.log(response);
       const jsondata = await response.json();
+      console.log(jsondata);
       setAllLeads(jsondata);
     } catch (err) {
       console.error(err);
