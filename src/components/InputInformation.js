@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import DatePicker from "react-datepicker";
 import ReactiveButton from "reactive-button";
 
@@ -13,7 +13,7 @@ import {
 const InputInformation = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [datePicker, setDatePicker] = useState("");
@@ -22,6 +22,7 @@ const InputInformation = () => {
   const onSubmitForm = async (e) => {
     console.log("Submit form...");
     e.preventDefault();
+
     let getAge = (dateString) => {
       let today = new Date();
       let birthDate = new Date(dateString);
@@ -33,39 +34,87 @@ const InputInformation = () => {
       return age;
     };
 
+    let formatPhoneNumber = (str) => {
+      //Filter only numbers from the input
+      let cleaned = ("" + str).replace(/\D/g, "");
+
+      //Check if the input is of correct
+      let match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+
+      if (match) {
+        //Remove the matched extension code
+        //Change this to format for any country code.
+        let intlCode = match[1] ? "+1 " : "";
+        return [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join(
+          ""
+        );
+      }
+
+      return null;
+    };
+
+    let phoneNumber = formatPhoneNumber(phone);
+
     if (datePicker !== "") {
       const formattedDate = `${datePicker.getMonth() +
         1}/${datePicker.getDate()}/${datePicker.getFullYear()}`;
-      console.log(firstName, lastName, address, phone, email, formattedDate);
+      console.log(
+        firstName,
+        lastName,
+        /*address,*/ phone,
+        email,
+        formattedDate
+      );
       if (getAge(formattedDate) <= 1) {
         setReactiveButton("error");
+        setTimeout(() => {
+          setReactiveButton("idle");
+        }, 2000);
         return;
       }
-    } else {
-      setReactiveButton("error");
-      return;
     }
 
     if (
       firstName === "" ||
       lastName === "" ||
-      address === "" ||
+      // address === "" ||
       phone === "" ||
       email === "" ||
-      datePicker === ""
+      datePicker === "" ||
+      phoneNumber === null
     ) {
       setReactiveButton("error");
+      setTimeout(() => {
+        setReactiveButton("idle");
+      }, 2000);
       return;
     }
 
     try {
       setReactiveButton("loading");
-      // const response = await fetch("http://localhost:5000/api/getAllLeads", {
-      //   method: "GET",
-      //   headers: { "Content-Type": "application/json" },
-      // });
+      let youth = false;
+      if (getAge(datePicker) < 18) {
+        youth = true;
+      }
+      const response = await fetch("http://dbmserver.vonce.me/api/newLead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          // address: address,
+          email: email,
+          youth: youth,
+          leadManagerId: null,
+          referredBy: null,
+          joinGym: null,
+          classRegistration: 0,
+          notes: null,
+        }),
+      });
 
-      // setReactiveButton("success");
+      setReactiveButton("success");
     } catch (err) {
       console.log(err);
       setReactiveButton("error");
@@ -73,8 +122,6 @@ const InputInformation = () => {
         setReactiveButton("idle");
       }, 2000);
     }
-
-    return;
   };
 
   return (
@@ -102,24 +149,24 @@ const InputInformation = () => {
                     onClick={() => setLastName("")}
                     placeholder="Last Name"
                   />
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control margin-bottom"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     onClick={() => setAddress("")}
                     placeholder="Address"
-                  />
-                </div>
-                <div className="float-child">
+                  /> */}
                   <input
                     type="text"
                     className="form-control margin-bottom"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     onClick={() => setPhone("")}
-                    placeholder="Phone"
+                    placeholder="Phone Number: +1 000-000-0000"
                   />
+                </div>
+                <div className="float-child">
                   <input
                     type="text"
                     className="form-control margin-bottom"
@@ -140,42 +187,42 @@ const InputInformation = () => {
                     maxDate={new Date()}
                     dateFormat="dd/MM/yyyy"
                   />
+                  <ReactiveButton
+                    buttonState={reactiveButton}
+                    color={"primary"}
+                    idleText={"Submit"}
+                    loadingText={
+                      <Fragment>
+                        <FontAwesomeIcon icon={faCircleNotch} spin /> Loading
+                      </Fragment>
+                    }
+                    successText={
+                      <Fragment>
+                        <FontAwesomeIcon icon={faThumbsUp} /> Successfully
+                        Registered!
+                      </Fragment>
+                    }
+                    errorText={
+                      <Fragment>
+                        <FontAwesomeIcon icon={faBomb} /> Error
+                      </Fragment>
+                    }
+                    type={"submit"}
+                    style={{ borderRadius: "5px" }}
+                    outline={false}
+                    shadow={true}
+                    rounded={true}
+                    size={"normal"}
+                    block={false}
+                    messageDuration={2000}
+                    disabled={false}
+                    buttonRef={null}
+                    width={"100%"}
+                    height={null}
+                    animation={true}
+                  />
                 </div>
               </div>
-              <ReactiveButton
-                buttonState={reactiveButton}
-                color={"primary"}
-                idleText={"Submit"}
-                loadingText={
-                  <Fragment>
-                    <FontAwesomeIcon icon={faCircleNotch} spin /> Loading
-                  </Fragment>
-                }
-                successText={
-                  <Fragment>
-                    <FontAwesomeIcon icon={faThumbsUp} /> Successfully
-                    Registered!
-                  </Fragment>
-                }
-                errorText={
-                  <Fragment>
-                    <FontAwesomeIcon icon={faBomb} /> Error
-                  </Fragment>
-                }
-                type={"submit"}
-                style={{ borderRadius: "5px" }}
-                outline={false}
-                shadow={true}
-                rounded={true}
-                size={"normal"}
-                block={false}
-                messageDuration={2000}
-                disabled={false}
-                buttonRef={null}
-                width={null}
-                height={null}
-                animation={true}
-              />
             </div>
           </form>
         </div>
