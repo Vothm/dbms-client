@@ -45,11 +45,11 @@ const Navbar = () => {
               About
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="/manager">
               Manager
             </Link>
-          </li>
+          </li> */}
         </ul>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">

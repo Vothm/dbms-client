@@ -13,7 +13,7 @@ const Manager = () => {
   const handleDelete = async (id) => {
     try {
       const deleteRow = await fetch(
-        `http://localhost:${port}/api/deleteLead/${id}`,
+        `http://dbmserver.vonce.me/api/deleteLead/${id}`,
         {
           method: "DELETE",
         }
@@ -27,7 +27,7 @@ const Manager = () => {
 
   const getAllLeads = async () => {
     try {
-      const response = await fetch(`http://localhost:${port}/api/getAllLeads`);
+      const response = await fetch(`dbmserver.vonce.me/api/getAllLeads`);
       console.log(response);
       const jsondata = await response.json();
       console.log(jsondata);
