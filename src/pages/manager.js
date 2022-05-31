@@ -27,9 +27,7 @@ const Manager = () => {
 
   const getAllLeads = async () => {
     try {
-      const response = await fetch(
-        `https://dbmserver.vonce.me/api/getAllLeads`
-      );
+      const response = await fetch(`http://dbmserver.vonce.me/api/getAllLeads`);
       console.log(response);
       const jsondata = await response.json();
       console.log(jsondata);
