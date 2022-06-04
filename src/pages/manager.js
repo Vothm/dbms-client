@@ -27,7 +27,7 @@ const Manager = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="float-container">
+      {/* <div className="float-container">
         <div className="floater">
           <DataTable arr={allLeads} setState={setAllLeads} />
         </div>
@@ -35,7 +35,7 @@ const Manager = () => {
         <div>
           <DataTable arr={allLeads} setState={setAllLeads} />
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="float-container">
         <div
