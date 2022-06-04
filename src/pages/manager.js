@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
+import DataTable from "../components/DataTable";
 import Navbar from "../components/Navbar";
-const env = require("dotenv").config({ path: "../" });
 
 const Manager = () => {
   let port = 5000;
@@ -9,28 +9,11 @@ const Manager = () => {
   console.log(port);
   const [allLeads, setAllLeads] = useState([]);
 
-  // Delete row
-  const handleDelete = async (id) => {
-    try {
-      const deleteRow = await fetch(
-        `http://dbmserver.vonce.me/api/deleteLead/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      console.log(deleteRow);
-      setAllLeads(allLeads.filter((lead) => lead.id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
   const getAllLeads = async () => {
     try {
       const response = await fetch(`http://dbmserver.vonce.me/api/getAllLeads`);
       console.log(response);
       const jsondata = await response.json();
-      console.log(jsondata);
       setAllLeads(jsondata);
     } catch (err) {
       console.error(err);
@@ -44,7 +27,10 @@ const Manager = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="float-container">
+      <div>
+        <DataTable arr={allLeads} setState={setAllLeads} />
+      </div>
+      {/* <div className="float-container">
         <div
           className="container table-responsive float-child"
           style={
@@ -102,7 +88,7 @@ const Manager = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </Fragment>
   );
 };
