@@ -114,7 +114,12 @@ const InputInformation = () => {
         }),
       });
 
-      setReactiveButton("success");
+      if (response.status === 200) {
+        setReactiveButton("success");
+        setTimeout(() => {
+          setReactiveButton("idle");
+        }, 2000);
+      }
     } catch (err) {
       console.log(err);
       setReactiveButton("error");
