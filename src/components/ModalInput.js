@@ -7,7 +7,7 @@ import {
   faThumbsUp,
   faBomb,
 } from "@fortawesome/free-solid-svg-icons";
-import { formatPhoneNumber } from "../Utility/util.js";
+import { formatPhoneNumber, checkString } from "../Utility/util.js";
 
 const ModalInput = () => {
   const [show, setShow] = useState(false);
@@ -42,7 +42,9 @@ const ModalInput = () => {
       phone === "" ||
       email === "" ||
       youth === "" ||
-      phoneNumber === null
+      phoneNumber === null ||
+      !checkString(firstName) ||
+      !checkString(lastName)
     ) {
       setReactiveButton("error");
       setTimeout(() => {

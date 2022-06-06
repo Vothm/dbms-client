@@ -15,6 +15,10 @@ export function formatPhoneNumber(str) {
   return null;
 }
 
+export function checkString(str) {
+  return /^[a-zA-Z]+$/.test(str);
+}
+
 export function getAge(dateString) {
   let today = new Date();
   let birthDate = new Date(dateString);
