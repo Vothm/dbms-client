@@ -9,6 +9,7 @@ import {
   faThumbsUp,
   faBomb,
 } from "@fortawesome/free-solid-svg-icons";
+import { formatPhoneNumber, getAge } from "../Utility/util.js";
 
 const InputInformation = () => {
   const [firstName, setFirstName] = useState("");
@@ -23,48 +24,13 @@ const InputInformation = () => {
     console.log("Submit form...");
     e.preventDefault();
 
-    let getAge = (dateString) => {
-      let today = new Date();
-      let birthDate = new Date(dateString);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      let m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    };
-
-    let formatPhoneNumber = (str) => {
-      //Filter only numbers from the input
-      let cleaned = ("" + str).replace(/\D/g, "");
-
-      //Check if the input is of correct
-      let match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-
-      if (match) {
-        //Remove the matched extension code
-        //Change this to format for any country code.
-        let intlCode = match[1] ? "+1 " : "";
-        return [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join(
-          ""
-        );
-      }
-
-      return null;
-    };
-
     let phoneNumber = formatPhoneNumber(phone);
 
     if (datePicker !== "") {
-      const formattedDate = `${datePicker.getMonth() +
-        1}/${datePicker.getDate()}/${datePicker.getFullYear()}`;
-      console.log(
-        firstName,
-        lastName,
-        /*address,*/ phone,
-        email,
-        formattedDate
-      );
+      const formattedDate = `${
+        datePicker.getMonth() + 1
+      }/${datePicker.getDate()}/${datePicker.getFullYear()}`;
+
       if (getAge(formattedDate) <= 1) {
         setReactiveButton("error");
         setTimeout(() => {
@@ -190,7 +156,7 @@ const InputInformation = () => {
                     yearDropdownItemNumber={100}
                     placeholderText="Date of Birth"
                     maxDate={new Date()}
-                    dateFormat="dd/MM/yyyy"
+                    dateFormat="MM/dd/yyyy"
                   />
                   <ReactiveButton
                     buttonState={reactiveButton}

@@ -130,3 +130,7 @@ aside,
 .margin-bottom {
   margin-bottom: 0.7px;
 }
+
+.my-modal .modal-content {
+  background-color: rgb(60, 57, 57);
+}

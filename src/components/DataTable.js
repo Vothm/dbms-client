@@ -3,18 +3,24 @@ import React, {
   useState,
   useEffect,
   Fragment,
-  useReducer,
 } from "react";
-import { useTable, useGlobalFilter, useSortBy } from "react-table";
-import { usePagination } from "react-table/dist/react-table.development";
+import {
+  useTable,
+  useGlobalFilter,
+  useSortBy,
+  usePagination,
+} from "react-table";
 import ReactiveButton from "reactive-button";
 import GlobalFilter from "./GlobalFilter";
+import { Button } from "react-bootstrap";
+import ModalEdit from "./ModalEdit";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 import BTable from "react-bootstrap/Table";
+import ModalInput from "./ModalEdit";
 
-const DataTable = ({ data, setState, getData }) => {
+const DataTable = ({ data, setState, getData, title }) => {
   const handleDelete = async (row) => {
     try {
       const deleteRow = await fetch(
@@ -35,73 +41,79 @@ const DataTable = ({ data, setState, getData }) => {
     }
   };
 
-  // const handleKeyUp = async (e) => {
-  //   let text = e.target.value;
-  //   if (text === "") {
-  //   } else {
-  //   }
-  // };
-
   const columns = useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "id",
-      },
-      {
-        Header: "First Name",
-        accessor: "firstname",
-      },
-      {
-        Header: "Last Name",
-        accessor: "lastname",
-      },
-      {
-        Header: "Phone Number",
-        accessor: "phonenumber",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
-        Header: "Youth",
-        accessor: "youth",
-      },
-      {
-        Header: "Lead Manager ID",
-        accessor: "leadmanagerid",
-      },
-      {
-        Header: "Referred By",
-        accessor: "referredby",
-      },
-      {
-        Header: "Join Gym",
-        accessor: "joingym",
-      },
-      {
-        Header: "Class Registration",
-        accessor: "classregistration",
-      },
-      {
-        Header: "Notes",
-        accessor: "notes",
-      },
-      {
-        Header: "Delete",
-        Cell: ({ row }) => (
-          <div>
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                handleDelete(row);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        ),
+        Header: title,
+        columns: [
+          {
+            Header: "ID",
+            accessor: "id",
+          },
+          {
+            Header: "First Name",
+            accessor: "firstname",
+          },
+          {
+            Header: "Last Name",
+            accessor: "lastname",
+          },
+          {
+            Header: "Phone Number",
+            accessor: "phonenumber",
+          },
+          {
+            Header: "Email",
+            accessor: "email",
+          },
+          {
+            Header: "Youth",
+            accessor: (d) => String(d.youth),
+          },
+          {
+            Header: "Lead Manager ID",
+            accessor: (d) => String(d.leadmanagerid),
+          },
+          {
+            Header: "Referred By",
+            accessor: "referredby",
+          },
+          {
+            Header: "Join Gym",
+            accessor: (d) => String(d.joingym),
+          },
+          {
+            Header: "Class Registration",
+            accessor: "classregistration",
+          },
+          {
+            Header: "Notes",
+            accessor: "notes",
+          },
+          {
+            Header: "Edit",
+            Cell: ({ row }) => (
+              <div>
+                <ModalEdit row={row.original}></ModalEdit>
+              </div>
+            ),
+          },
+          {
+            Header: "Delete",
+            Cell: ({ row }) => (
+              <div>
+                <Button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    handleDelete(row);
+                  }}
+                >
+                  Delete
+                </Button>
+              </div>
+            ),
+          },
+        ],
       },
     ],
     []

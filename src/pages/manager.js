@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import DataTable from "../components/DataTable";
+import ModalInput from "../components/ModalInput";
 import Navbar from "../components/Navbar";
 
 const Manager = () => {
@@ -23,7 +24,10 @@ const Manager = () => {
   return (
     <Fragment>
       <Navbar />
-      <DataTable data={allLeads} setState={setAllLeads} getData={getAllLeads} />
+      <div>
+        <ModalInput />
+      </div>
+      <DataTable title={"All Leads"} data={allLeads} setState={setAllLeads} getData={getAllLeads} />
       {/* <div className="float-container">
         <div className="floater">
           <DataTable arr={allLeads} setState={setAllLeads} />
