@@ -9,11 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { formatPhoneNumber } from "../Utility/util.js";
 
-const ModalEdit = ({ row, setAllBool, setAllStates }) => {
+const ModalEdit = ({ row, allDataBool, setAllData }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
-    handleSubmit();
     setChange(!change);
+    setAllData(!allDataBool);
     setShow(false);
   };
   const handleShow = () => setShow(true);
@@ -47,7 +47,6 @@ const ModalEdit = ({ row, setAllBool, setAllStates }) => {
     setNotes(row.notes);
     setYouthButton(row.youth ? "Youth" : "Not Youth");
     setJoinGymButtom(row.joingym ? "Join Gym" : "Not Join Gym");
-    setAllStates(!setAllBool);
   }, [change]);
 
   const handleSubmit = async () => {
@@ -73,27 +72,43 @@ const ModalEdit = ({ row, setAllBool, setAllStates }) => {
     try {
       setReactiveButton("loading");
 
+      let payload;
+      if (email === row.email) {
+        payload = JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          youth: youth,
+          leadManagerID: leadManagerId,
+          referredBy: referredBy,
+          joinGym: joinGym,
+          classRegistration: classRegistration,
+          notes: notes,
+        });
+      } else {
+        payload = JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          email: email,
+          youth: youth,
+          leadManagerID: leadManagerId,
+          referredBy: referredBy,
+          joinGym: joinGym,
+          classRegistration: classRegistration,
+          notes: notes,
+        });
+      }
+
       const response = await fetch(
         `http://dbmserver.vonce.me/api/updateLead/${row.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            phoneNumber: phoneNumber,
-            email: email,
-            youth: youth,
-            leadManagerID: leadManagerId,
-            referredBy: referredBy,
-            joinGym: joinGym,
-            classRegistration: classRegistration,
-            notes: notes,
-          }),
+          body: payload,
         }
       );
       if (response.status === 200) {
-        console.log("success");
         setReactiveButton("success");
         setTimeout(() => {
           setReactiveButton("idle");
@@ -121,7 +136,7 @@ const ModalEdit = ({ row, setAllBool, setAllStates }) => {
           <Modal.Title>Add a lead</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <Form.Group>
               <Form.Label>First Name*</Form.Label>
               <Form.Control

@@ -19,8 +19,8 @@ const DataTable = ({
   setState,
   getData,
   title,
-  setAllBool,
-  setAllStates,
+  allDataBool,
+  setAllData,
 }) => {
   const handleDelete = async (row) => {
     try {
@@ -97,8 +97,8 @@ const DataTable = ({
             Cell: ({ row }) => (
               <div>
                 <ModalEdit
-                  setAllBool={setAllBool}
-                  setAllStates={setAllStates}
+                  allDataBool={allDataBool}
+                  setAllData={setAllData}
                   row={row.original}
                 ></ModalEdit>
               </div>

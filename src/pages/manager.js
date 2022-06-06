@@ -1,7 +1,14 @@
 import React, { Fragment, useState, useEffect } from "react";
+import ReactiveButton from "reactive-button";
 import DataTable from "../components/DataTable";
 import ModalInput from "../components/ModalInput";
 import Navbar from "../components/Navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleNotch,
+  faThumbsUp,
+  faBomb,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Manager = () => {
   const [allLeads, setAllLeads] = useState([]);
@@ -10,13 +17,13 @@ const Manager = () => {
   const [seirraLeads, setSeirraLeads] = useState([]);
   const [alexLeads, setAlexLeads] = useState([]);
   const [change, setChange] = useState(false);
+  const [reactiveButton, setReactiveButton] = useState("idle");
 
   const getAllLeads = async () => {
     try {
       const response = await fetch(`http://dbmserver.vonce.me/api/getAllLeads`);
       const jsondata = await response.json();
       setAllLeads(jsondata);
-      setChange(!change);
       return true;
     } catch (err) {
       console.error(err);
@@ -30,7 +37,6 @@ const Manager = () => {
       );
       const jsondata = await response.json();
       setVinceLeads(jsondata);
-      setChange(!change);
       return true;
     } catch (err) {
       console.error(err);
@@ -44,7 +50,6 @@ const Manager = () => {
       );
       const jsondata = await response.json();
       setAboudLeads(jsondata);
-      setChange(!change);
       return true;
     } catch (err) {
       console.error(err);
@@ -58,7 +63,6 @@ const Manager = () => {
       );
       const jsondata = await response.json();
       setSeirraLeads(jsondata);
-      setChange(!change);
       return true;
     } catch (err) {
       console.error(err);
@@ -72,7 +76,6 @@ const Manager = () => {
       );
       const jsondata = await response.json();
       setAlexLeads(jsondata);
-      setChange(!change);
       return true;
     } catch (err) {
       console.error(err);
@@ -85,7 +88,7 @@ const Manager = () => {
     getAboudLeads();
     getSeirraLeads();
     getAlexLeads();
-  }, []);
+  }, [change]);
 
   return (
     <Fragment>
@@ -97,10 +100,48 @@ const Manager = () => {
             style={{ marginTop: "50px", display: "table", margin: "0 auto" }}
           >
             <ModalInput />
-
+            <ReactiveButton
+              buttonState={reactiveButton}
+              color={"violet"}
+              idleText={"Refresh all data"}
+              loadingText={
+                <Fragment>
+                  <FontAwesomeIcon icon={faCircleNotch} spin /> Loading
+                </Fragment>
+              }
+              successText={
+                <Fragment>
+                  <FontAwesomeIcon icon={faThumbsUp} /> Successfully Registered!
+                </Fragment>
+              }
+              errorText={
+                <Fragment>
+                  <FontAwesomeIcon icon={faBomb} /> Error
+                </Fragment>
+              }
+              style={{ borderRadius: "5px" }}
+              outline={false}
+              shadow={true}
+              rounded={true}
+              size={"normal"}
+              block={false}
+              messageDuration={2000}
+              disabled={false}
+              buttonRef={null}
+              height={null}
+              animation={true}
+              onClick={() => {
+                setReactiveButton("loading");
+                setChange(!change);
+                setReactiveButton("success");
+                setTimeout(() => {
+                  setReactiveButton("idle");
+                }, 2000);
+              }}
+            />
             <DataTable
-              setAllBool={change}
-              setAllStates={setChange}
+              allDataBool={change}
+              setAllData={setChange}
               title={"All Leads"}
               data={allLeads}
               setState={setAllLeads}
@@ -108,8 +149,8 @@ const Manager = () => {
             />
             <div style={{ marginTop: "70px" }}>
               <DataTable
-                setAllBool={change}
-                setAllStates={setChange}
+                allDataBool={change}
+                setAllData={setChange}
                 title={"Vince Leads"}
                 data={vinceLeads}
                 setState={setVinceLeads}
@@ -118,8 +159,8 @@ const Manager = () => {
             </div>
             <div style={{ marginTop: "70px" }}>
               <DataTable
-                setAllBool={change}
-                setAllStates={setChange}
+                allDataBool={change}
+                setAllData={setChange}
                 title={"Aboud Leads"}
                 data={aboudLeads}
                 setState={setAboudLeads}
@@ -129,9 +170,9 @@ const Manager = () => {
 
             <div style={{ marginTop: "70px" }}>
               <DataTable
-                setAllBool={change}
-                setAllStates={setChange}
-                title={"Seirra Leads"}
+                allDataBool={change}
+                setAllData={setChange}
+                title={"Sierra Leads"}
                 data={seirraLeads}
                 setState={setSeirraLeads}
                 getData={getSeirraLeads}
@@ -140,8 +181,8 @@ const Manager = () => {
 
             <div style={{ marginTop: "70px" }}>
               <DataTable
-                setAllBool={change}
-                setAllStates={setChange}
+                allDataBool={change}
+                setAllData={setChange}
                 title={"Alex Leads"}
                 data={alexLeads}
                 setState={setAlexLeads}

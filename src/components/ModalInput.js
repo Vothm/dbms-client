@@ -92,7 +92,7 @@ const ModalInput = () => {
   return (
     <Fragment>
       <Button variant="success" onClick={handleShow}>
-        Add a Lead
+        Add a new Lead
       </Button>
       <Modal className="my-modal" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
