@@ -91,7 +91,7 @@ const ModalInput = () => {
 
   return (
     <Fragment>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="success" onClick={handleShow}>
         Add a Lead
       </Button>
       <Modal className="my-modal" show={show} onHide={handleClose}>
@@ -217,7 +217,7 @@ const ModalInput = () => {
           <ReactiveButton
             buttonState={reactiveButton}
             color={"primary"}
-            idleText={"Submit"}
+            idleText={"Add a lead"}
             loadingText={
               <Fragment>
                 <FontAwesomeIcon icon={faCircleNotch} spin /> Loading
@@ -247,9 +247,7 @@ const ModalInput = () => {
             height={null}
             animation={true}
             onClick={handleSubmit}
-          >
-            Save Changes
-          </ReactiveButton>
+          />
         </Modal.Footer>
       </Modal>
     </Fragment>
