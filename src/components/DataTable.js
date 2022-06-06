@@ -7,7 +7,7 @@ import {
 } from "react-table";
 import ReactiveButton from "reactive-button";
 import GlobalFilter from "./GlobalFilter";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import ModalEdit from "./ModalEdit";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -143,6 +143,9 @@ const DataTable = ({
     canPreviousPage,
     canNextPage,
     pageOptions,
+    gotoPage,
+    pageSize,
+    setPageSize,
   } = tableInstance;
 
   return (
@@ -225,6 +228,18 @@ const DataTable = ({
             {pageIndex + 1} of {pageOptions.length}
           </strong>{" "}
         </span>
+        <span>
+          | Go to page:{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              let page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
         <ReactiveButton idleText="Previous Page" onClick={() => previousPage()}>
           Previous
         </ReactiveButton>
