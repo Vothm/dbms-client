@@ -111,7 +111,7 @@ const Manager = () => {
               }
               successText={
                 <Fragment>
-                  <FontAwesomeIcon icon={faThumbsUp} /> Successfully Registered!
+                  <FontAwesomeIcon icon={faThumbsUp} /> Successfully Refreshed!
                 </Fragment>
               }
               errorText={
@@ -142,7 +142,7 @@ const Manager = () => {
             <DataTable
               allDataBool={change}
               setAllData={setChange}
-              title={"All Leads"}
+              title={"Incoming Leads"}
               data={allLeads}
               setState={setAllLeads}
               getData={getAllLeads}

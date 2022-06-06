@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, Fragment } from "react";
+import React, { useMemo, Fragment } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -49,10 +49,6 @@ const DataTable = ({
         id: "title",
         columns: [
           {
-            Header: "ID",
-            accessor: "id",
-          },
-          {
             Header: "First Name",
             accessor: "firstname",
           },
@@ -71,10 +67,6 @@ const DataTable = ({
           {
             Header: "Youth",
             accessor: (d) => String(d.youth),
-          },
-          {
-            Header: "Lead Manager ID",
-            accessor: (d) => String(d.leadmanagerid),
           },
           {
             Header: "Referred By",
