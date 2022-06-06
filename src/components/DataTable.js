@@ -10,25 +10,26 @@ import { usePagination } from "react-table/dist/react-table.development";
 import ReactiveButton from "reactive-button";
 import GlobalFilter from "./GlobalFilter";
 
+// import "bootstrap/dist/css/bootstrap.min.css";
+
+import BTable from "react-bootstrap/Table";
+
 const DataTable = ({ data, setState, getData }) => {
   const handleDelete = async (row) => {
     try {
-      // const deleteRow = await fetch(
-      //   `http://dbmserver.vonce.me/api/deleteLead/${row.original.id}`,
-      //   {
-      //     method: "DELETE",
-      //   }
-      // );
-      // if (deleteRow.status === 200) {
-      //   // setState(data.filter((lead) => lead.id !== row.original.id));
-      // }
-      // setState(tableInstance.rows);
-
-      setState(
-        tableInstance.rows
-          .map(({ original }) => original)
-          .filter((lead) => lead.id !== row.original.id)
+      const deleteRow = await fetch(
+        `http://dbmserver.vonce.me/api/deleteLead/${row.original.id}`,
+        {
+          method: "DELETE",
+        }
       );
+      if (deleteRow.status === 200) {
+        setState(
+          tableInstance.rows
+            .map(({ original }) => original)
+            .filter((lead) => lead.id !== row.original.id)
+        );
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -136,7 +137,15 @@ const DataTable = ({ data, setState, getData }) => {
 
   return (
     <Fragment>
-      <table {...getTableProps()}>
+      <BTable
+        striped
+        bordered
+        hover
+        size={"sm"}
+        variant={"dark"}
+        responsive
+        {...getTableProps()}
+      >
         <thead>
           <tr>
             <th colSpan={visibleColumns.length}>
@@ -198,7 +207,7 @@ const DataTable = ({ data, setState, getData }) => {
             })
           }
         </tbody>
-      </table>
+      </BTable>
       <div>
         <span>
           Page{" "}
