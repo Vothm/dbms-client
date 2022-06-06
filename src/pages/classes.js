@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import React, { Component } from "react";
+import React from "react";
 
 const Classes = () => {
   return (
