@@ -97,7 +97,10 @@ const InputInformation = () => {
 
   return (
     <Fragment>
-      <h1 className="text-center mt-5">Input Information</h1>
+      <h1 className="text-center mt-5">
+        Welcome to Wildstyle Gym, please enter your information and we will
+        contact you about your free trial classes today!
+      </h1>
       <div className="container">
         <div className="d-flex justify-content-center">
           <form className="d-flex mt-5" onSubmit={onSubmitForm}>
