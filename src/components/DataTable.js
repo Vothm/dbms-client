@@ -1,9 +1,4 @@
-import React, {
-  useMemo,
-  useState,
-  useEffect,
-  Fragment,
-} from "react";
+import React, { useMemo, useState, useEffect, Fragment } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -18,9 +13,15 @@ import ModalEdit from "./ModalEdit";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 import BTable from "react-bootstrap/Table";
-import ModalInput from "./ModalEdit";
 
-const DataTable = ({ data, setState, getData, title }) => {
+const DataTable = ({
+  data,
+  setState,
+  getData,
+  title,
+  setAllBool,
+  setAllStates,
+}) => {
   const handleDelete = async (row) => {
     try {
       const deleteRow = await fetch(
@@ -44,7 +45,8 @@ const DataTable = ({ data, setState, getData, title }) => {
   const columns = useMemo(
     () => [
       {
-        Header: title,
+        Header: <div style={{ textAlign: "center" }}>{title}</div>,
+        id: "title",
         columns: [
           {
             Header: "ID",
@@ -94,7 +96,11 @@ const DataTable = ({ data, setState, getData, title }) => {
             Header: "Edit",
             Cell: ({ row }) => (
               <div>
-                <ModalEdit row={row.original}></ModalEdit>
+                <ModalEdit
+                  setAllBool={setAllBool}
+                  setAllStates={setAllStates}
+                  row={row.original}
+                ></ModalEdit>
               </div>
             ),
           },

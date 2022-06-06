@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { formatPhoneNumber } from "../Utility/util.js";
 
-const ModalEdit = ({ row }) => {
+const ModalEdit = ({ row, setAllBool, setAllStates }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     handleSubmit();
@@ -37,7 +37,7 @@ const ModalEdit = ({ row }) => {
   useEffect(() => {
     setFirstName(row.firstname);
     setLastName(row.lastname);
-    setPhone(row.phone);
+    setPhone(row.phonenumber);
     setEmail(row.email);
     setYouth(row.youth);
     setLeadManagerId(row.leadmanagerid);
@@ -47,6 +47,7 @@ const ModalEdit = ({ row }) => {
     setNotes(row.notes);
     setYouthButton(row.youth ? "Youth" : "Not Youth");
     setJoinGymButtom(row.joingym ? "Join Gym" : "Not Join Gym");
+    setAllStates(!setAllBool);
   }, [change]);
 
   const handleSubmit = async () => {
@@ -72,29 +73,32 @@ const ModalEdit = ({ row }) => {
     try {
       setReactiveButton("loading");
 
-      const response = await fetch("http://dbmserver.vonce.me/api/newLead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: phoneNumber,
-          // address: address,
-          email: email,
-          youth: youth,
-          leadManagerId: leadManagerId,
-          referredBy: referredBy,
-          joinGym: joinGym,
-          classRegistration: classRegistration,
-          notes: notes,
-        }),
-      });
+      const response = await fetch(
+        `http://dbmserver.vonce.me/api/updateLead/${row.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            email: email,
+            youth: youth,
+            leadManagerID: leadManagerId,
+            referredBy: referredBy,
+            joinGym: joinGym,
+            classRegistration: classRegistration,
+            notes: notes,
+          }),
+        }
+      );
       if (response.status === 200) {
         console.log("success");
         setReactiveButton("success");
         setTimeout(() => {
           setReactiveButton("idle");
         }, 2000);
+        setChange(!change);
         return true;
       }
     } catch (error) {

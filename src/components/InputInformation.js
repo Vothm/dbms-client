@@ -72,7 +72,7 @@ const InputInformation = () => {
           // address: address,
           email: email,
           youth: youth,
-          leadManagerId: null,
+          leadManagerID: null,
           referredBy: null,
           joinGym: null,
           classRegistration: 0,

@@ -64,7 +64,7 @@ const ModalInput = () => {
           // address: address,
           email: email,
           youth: youth,
-          leadManagerId: leadManagerId,
+          leadManagerID: leadManagerId,
           referredBy: referredBy,
           joinGym: joinGym,
           classRegistration: classRegistration,
