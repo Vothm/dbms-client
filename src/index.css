@@ -131,7 +131,13 @@ aside,
   margin-bottom: 0.7px;
 }
 
-
 .my-modal .modal-content {
   background-color: rgb(60, 57, 57);
+}
+
+.centered {
+  position: sticky;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

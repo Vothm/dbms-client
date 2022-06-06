@@ -91,58 +91,64 @@ const Manager = () => {
     <Fragment>
       <Navbar />
       <div>
-        <ModalInput />
-      </div>
-      <div className="padding-bottom-10" style={{ marginTop: "50px" }}>
-        <DataTable
-          setAllBool={change}
-          setAllStates={setChange}
-          title={"All Leads"}
-          data={allLeads}
-          setState={setAllLeads}
-          getData={getAllLeads}
-        />
-        <div style={{ marginTop: "70px" }}>
-          <DataTable
-            setAllBool={change}
-            setAllStates={setChange}
-            title={"Vince Leads"}
-            data={vinceLeads}
-            setState={setVinceLeads}
-            getData={getVinceLeads}
-          />
-        </div>
-        <div style={{ marginTop: "70px" }}>
-          <DataTable
-            setAllBool={change}
-            setAllStates={setChange}
-            title={"Aboud Leads"}
-            data={aboudLeads}
-            setState={setAboudLeads}
-            getData={getAboudLeads}
-          />
-        </div>
+        <div style={{ width: "100%" }}>
+          <div
+            className="padding-bottom-10"
+            style={{ marginTop: "50px", display: "table", margin: "0 auto" }}
+          >
+            <ModalInput />
 
-        <div style={{ marginTop: "70px" }}>
-          <DataTable
-            setAllBool={change}
-            setAllStates={setChange}
-            title={"Seirra Leads"}
-            data={seirraLeads}
-            setState={setSeirraLeads}
-            getData={getSeirraLeads}
-          />
-        </div>
+            <DataTable
+              setAllBool={change}
+              setAllStates={setChange}
+              title={"All Leads"}
+              data={allLeads}
+              setState={setAllLeads}
+              getData={getAllLeads}
+            />
+            <div style={{ marginTop: "70px" }}>
+              <DataTable
+                setAllBool={change}
+                setAllStates={setChange}
+                title={"Vince Leads"}
+                data={vinceLeads}
+                setState={setVinceLeads}
+                getData={getVinceLeads}
+              />
+            </div>
+            <div style={{ marginTop: "70px" }}>
+              <DataTable
+                setAllBool={change}
+                setAllStates={setChange}
+                title={"Aboud Leads"}
+                data={aboudLeads}
+                setState={setAboudLeads}
+                getData={getAboudLeads}
+              />
+            </div>
 
-        <div style={{ marginTop: "70px" }}>
-          <DataTable
-            setAllBool={change}
-            setAllStates={setChange}
-            title={"Alex Leads"}
-            data={alexLeads}
-            setState={setAlexLeads}
-            getData={getAlexLeads}
-          />
+            <div style={{ marginTop: "70px" }}>
+              <DataTable
+                setAllBool={change}
+                setAllStates={setChange}
+                title={"Seirra Leads"}
+                data={seirraLeads}
+                setState={setSeirraLeads}
+                getData={getSeirraLeads}
+              />
+            </div>
+
+            <div style={{ marginTop: "70px" }}>
+              <DataTable
+                setAllBool={change}
+                setAllStates={setChange}
+                title={"Alex Leads"}
+                data={alexLeads}
+                setState={setAlexLeads}
+                getData={getAlexLeads}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Fragment>
